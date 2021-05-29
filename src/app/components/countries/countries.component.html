@@ -1,0 +1,47 @@
+ 
+<div class="jumbotron bg-white text-center p-0 m-2 ">
+    <h1 class="display-5 text-info font-weight-bold">Live Covid-19 Tracker via Country</h1>
+    <hr>
+
+    <div class="mx-2">
+        <div class="form-group col-lg-5 ">
+            <label class="text-primary font-weight-bold float-start" for="c">Select Country</label>
+            <select name="" class="form-control" id="c" #input (change)='updateValues(input.value)'>
+                <option value="{{con}}" *ngFor='let con of countries'>{{con}}</option>
+            </select>
+        </div>
+    </div>
+    <app-dashboard [totalConfirmed]='totalConfirmed' [totalActive]='totalActive' [totalRecovered]='totalRecovered' [totalDeaths]='totalDeaths'></app-dashboard>
+
+
+    <div class="row m-auto mt-4">
+        <div class="col"> 
+            <table class="table table-hover shadow-lg">
+                <thead class="bg-danger">
+                    <tr>
+                        <th class="text-white">S.No.</th>
+                        <th class="text-white">Date</th>
+                        <th class="text-white">Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cs of selectedCountryData | paginate: { itemsPerPage: 15, currentPage: p }; index as i ">
+                        <td>{{i+1}}</td>
+                        <td>{{cs.date | date}}</td>
+                        <td>{{cs.cases}}</td>
+                      
+                    </tr>
+                </tbody>
+              </table>
+              <div class="d-block">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              </div>
+        </div>
+        <!-- <div class="col">
+            <google-chart></google-chart>
+        </div> -->
+
+
+    </div>
+</div> 
+<ngx-spinner class="text-white font-weight-bold">Loading...</ngx-spinner>
